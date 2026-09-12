@@ -220,7 +220,7 @@ export default async function CaseStudyPage({ params }: PageProps<"/work/[slug]"
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="block font-display text-base font-semibold tracking-tight">{s.title}</span>
-                      <span className="block truncate text-xs text-muted">{s.tagline}</span>
+                      <span className="block text-xs text-muted">{s.tagline}</span>
                     </span>
                     <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>

@@ -60,7 +60,7 @@ export default function ContactPage() {
               </span>
               <span className="min-w-0">
                 <span className="block text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-muted">{c.title}</span>
-                <span className="block truncate text-sm font-semibold">{c.value}</span>
+                <span className="block break-words text-sm font-semibold">{c.value}</span>
                 <span className="block text-xs text-muted">{c.note}</span>
               </span>
             </a>

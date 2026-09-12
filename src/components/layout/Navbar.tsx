@@ -128,6 +128,17 @@ export function Navbar() {
     };
   }, [open]);
 
+  // Escape closes whichever menu is open (mega menu on desktop, drawer on mobile).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setActiveMenu(null);
+      setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
   const closeMobile = () => setOpen(false);
 
   return (

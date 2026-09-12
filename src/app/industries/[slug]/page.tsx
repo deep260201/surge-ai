@@ -250,7 +250,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
                   </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-sm font-semibold leading-tight">{o.title}</span>
-                    <span className="block truncate text-xs text-muted">{o.hook}</span>
+                    <span className="block text-xs text-muted">{o.hook}</span>
                   </span>
                   <ArrowUpRight className="h-4 w-4 shrink-0 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
