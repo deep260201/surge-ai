@@ -5,7 +5,6 @@ import { FloatingActions } from "@/components/layout/FloatingActions";
 import { Navbar } from "@/components/layout/Navbar";
 import { Analytics } from "@/components/seo/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { MotionProvider } from "@/components/ui/MotionProvider";
 import { site } from "@/config/site";
 import { ogPaths, openGraphFor } from "@/lib/seo";
 import "./globals.css";
@@ -73,14 +72,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             ],
           }}
         />
-        <MotionProvider>
-          <Navbar />
-          <main id="main" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <FloatingActions />
-        </MotionProvider>
+        <Navbar />
+        <main id="main" className="flex-1">
+          {children}
+        </main>
+        <Footer />
+        <FloatingActions />
         <Analytics />
       </body>
     </html>

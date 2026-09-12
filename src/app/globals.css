@@ -64,6 +64,60 @@ body {
   }
 }
 
+/* Enter transitions for elements that mount when opened (menus, filtered cards).
+   @starting-style supplies the "from" state, so nothing has to stay mounted while closed
+   and no animation library is needed. Browsers without it simply show the element at once. */
+.anim-pop,
+.anim-drop,
+.anim-fade {
+  transition:
+    opacity 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@starting-style {
+  .anim-pop {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  .anim-drop {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  .anim-fade {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+/* Height animation without measuring: the 0fr -> 1fr grid row interpolates. */
+.collapsible {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 260ms;
+}
+.collapsible[data-open="true"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.collapsible > * {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-pop,
+  .anim-drop,
+  .anim-fade,
+  .collapsible,
+  canvas {
+    transition-duration: 0s;
+  }
+}
+
 @utility container-x {
   margin-inline: auto;
   width: 100%;

@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { AnimatePresence, m } from "framer-motion";
+import { useId, useState } from "react";
 import { Plus } from "lucide-react";
+import { Collapse } from "@/components/ui/Collapse";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { faqs as defaultFaqs, type FAQ as FAQItem } from "@/content/faqs";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,7 @@ export function FAQ({
   description?: string;
 }) {
   const [open, setOpen] = useState<number | null>(0);
+  const baseId = useId();
 
   return (
     <section className="bg-cream py-20 sm:py-28">
@@ -41,6 +42,7 @@ export function FAQ({
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
+                  aria-controls={`${baseId}-${i}`}
                   className="group -mx-4 flex w-[calc(100%+2rem)] items-center justify-between gap-6 rounded-2xl px-4 py-6 text-left transition-colors hover:bg-paper"
                 >
                   <span className="font-display text-lg font-semibold tracking-tight transition-transform duration-300 group-hover:translate-x-1 sm:text-xl">
@@ -55,19 +57,9 @@ export function FAQ({
                     <Plus className="h-4 w-4" />
                   </span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <m.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-6 pr-12 text-base leading-relaxed text-muted">{f.a}</p>
-                    </m.div>
-                  )}
-                </AnimatePresence>
+                <Collapse open={isOpen} id={`${baseId}-${i}`}>
+                  <p className="pb-6 pr-12 text-base leading-relaxed text-muted">{f.a}</p>
+                </Collapse>
               </div>
             );
           })}

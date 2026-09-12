@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, LazyMotion, domMax, m } from "framer-motion";
 import { WorkCard } from "@/components/work/WorkCard";
 import type { CaseStudy } from "@/content/work";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,6 @@ export function WorkGrid({ items }: { items: CaseStudy[] }) {
   const visible = active === "All" ? items : items.filter((w) => w.services.includes(active));
 
   return (
-    <LazyMotion features={domMax}>
     <div>
       <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter projects by service">
         {filters.map((f) => (
@@ -31,23 +29,14 @@ export function WorkGrid({ items }: { items: CaseStudy[] }) {
           </button>
         ))}
       </div>
-      <m.div layout className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {visible.map((w) => (
-            <m.div
-              key={w.slug}
-              layout
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.25 }}
-            >
-              <WorkCard work={w} className="h-full" />
-            </m.div>
-          ))}
-        </AnimatePresence>
-      </m.div>
+      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {visible.map((w) => (
+          // Keyed by filter so cards remount and replay the enter transition when the filter changes.
+          <div key={`${active}-${w.slug}`} className="anim-fade">
+            <WorkCard work={w} className="h-full" />
+          </div>
+        ))}
+      </div>
     </div>
-    </LazyMotion>
   );
 }

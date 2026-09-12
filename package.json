@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postbuild": "node scripts/fix-export-prefetch.mjs"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -14,7 +15,6 @@
     "@next/mdx": "^16.3.5",
     "@types/mdx": "^2.0.14",
     "clsx": "^2.1.1",
-    "framer-motion": "^13.2.0",
     "lucide-react": "^1.45.0",
     "next": "16.3.5",
     "react": "19.2.8",
