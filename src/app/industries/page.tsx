@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import { FAQ } from "@/components/home/FAQ";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { Process } from "@/components/home/Process";
 import { TwoDoors } from "@/components/home/TwoDoors";
-import { industryIcons } from "@/components/industries/industryIcons";
+import { industryImages } from "@/components/industries/industryImages";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
@@ -63,29 +64,37 @@ export default function IndustriesPage() {
       <section className="container-x pb-20 sm:pb-28">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((ind, i) => {
-            const Icon = industryIcons[ind.slug];
+            const img = industryImages[ind.slug];
             return (
               <Reveal key={ind.slug} delay={(i % 3) * 0.06}>
                 <Link
                   href={`/industries/${ind.slug}/`}
-                  className="group flex h-full flex-col rounded-3xl border border-line bg-paper p-7 shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-black/40 hover:shadow-card-hover"
+                  className="group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-paper shadow-card transition-all duration-300 hover:-translate-y-1.5 hover:border-black/40 hover:shadow-card-hover"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-mist transition-colors group-hover:bg-black group-hover:text-cream">
-                      <Icon className="h-6 w-6" strokeWidth={1.75} />
+                  <div className="relative aspect-[5/3] overflow-hidden bg-mist">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(min-width: 1024px) 400px, (min-width: 640px) 45vw, 90vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                    <span className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-paper/90 text-ink shadow-card backdrop-blur-sm transition-colors group-hover:bg-black group-hover:text-cream">
+                      <ArrowUpRight className="h-4 w-4" />
                     </span>
-                    <ArrowUpRight className="h-5 w-5 text-muted transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
-                  <h2 className="mt-8 font-display text-2xl font-bold tracking-tight">{ind.title}</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{ind.hook}</p>
-                  <div className="mt-6 flex flex-wrap gap-1.5 border-t border-line pt-5">
-                    {ind.subSectors.slice(0, 3).map((s) => (
-                      <span key={s} className="rounded-full border border-line px-2.5 py-1 text-[0.6875rem] font-medium text-muted">
-                        {s}
-                      </span>
-                    ))}
+                  <div className="flex flex-1 flex-col p-7">
+                    <h2 className="font-display text-2xl font-bold tracking-tight">{ind.title}</h2>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">{ind.hook}</p>
+                    <div className="mt-6 flex flex-wrap gap-1.5 border-t border-line pt-5">
+                      {ind.subSectors.slice(0, 3).map((s) => (
+                        <span key={s} className="rounded-full border border-line px-2.5 py-1 text-[0.6875rem] font-medium text-muted">
+                          {s}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="mt-auto pt-6 text-sm font-semibold">Build new or rebuild → Explore</span>
                   </div>
-                  <span className="mt-6 text-sm font-semibold">Build new or rebuild → Explore</span>
                 </Link>
               </Reveal>
             );
