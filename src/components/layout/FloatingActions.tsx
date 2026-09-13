@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUp } from "lucide-react";
-import { whatsappHref } from "@/config/site";
+import { ArrowUp, Mail } from "lucide-react";
+import { site, whatsappHref } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -12,6 +12,8 @@ function WhatsAppIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+const emailHref = `mailto:${site.email}?subject=${encodeURIComponent("Project enquiry")}`;
 
 export function FloatingActions() {
   const [showTop, setShowTop] = useState(false);
@@ -36,6 +38,13 @@ export function FloatingActions() {
       >
         <ArrowUp className="h-4 w-4" />
       </button>
+      <a
+        href={emailHref}
+        aria-label={`Email us at ${site.email}`}
+        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-ink shadow-card-hover transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-cream"
+      >
+        <Mail className="h-5 w-5" strokeWidth={1.75} />
+      </a>
       <a
         href={whatsappHref()}
         target="_blank"
