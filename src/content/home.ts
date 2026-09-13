@@ -15,7 +15,8 @@ export const process = [
   { step: "06", title: "Support", description: "Improve after launch." },
 ];
 
-export const trustPlatforms = ["Clutch", "GoodFirms", "Google", "Upwork", "Trustpilot", "DesignRush"];
+// Each name needs a matching logo in components/home/TrustBadges.tsx.
+export const trustPlatforms = ["Clutch", "GoodFirms", "Upwork", "Trustpilot", "DesignRush"];
 
 export const auditIncludes = [
   { title: "Performance & conversion review", detail: "where you're leaking speed, trust and sales." },
