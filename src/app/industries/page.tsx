@@ -54,7 +54,7 @@ export default function IndustriesPage() {
           <Button href="/contact/" size="lg" arrow>
             Get a free audit
           </Button>
-          <Button href="/work/" variant="secondary" size="lg">
+          <Button href="/work/" variant="secondary" size="lg" className="bg-white">
             See our work
           </Button>
         </div>

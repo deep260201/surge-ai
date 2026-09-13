@@ -45,7 +45,7 @@ export default function ServicesPage() {
           <Button href="/contact/" size="lg" arrow>
             Start Your Project
           </Button>
-          <Button href="/work/" variant="secondary" size="lg">
+          <Button href="/work/" variant="secondary" size="lg" className="bg-white">
             See our work
           </Button>
         </div>

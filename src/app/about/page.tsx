@@ -64,7 +64,7 @@ export default function AboutPage() {
           <Button href="/contact/" size="lg" arrow>
             Work with us
           </Button>
-          <Button href="/work/" variant="secondary" size="lg">
+          <Button href="/work/" variant="secondary" size="lg" className="bg-white">
             See our work
           </Button>
         </div>
