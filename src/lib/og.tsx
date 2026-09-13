@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import markCream from "@/assets/brand/mark-cream.png";
 import { site } from "@/config/site";
 
 export const ogSize = { width: 1200, height: 630 };
@@ -10,12 +11,13 @@ const palette = { black: "#0C0F0C", cream: "#F5F0E8", muted: "#8E8E88", line: "#
 
 const font = (file: string) => readFile(join(process.cwd(), "src/assets/fonts", file));
 
-// Same geometry as LogoMark in src/components/brand/Logo.tsx, embedded as a data URI so Satori can rasterise it.
-// TODO: replace with the real Surge AI logo SVG when supplied.
-const markSvg = (fill: string) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="${fill}"><defs><mask id="m"><rect width="100" height="100" fill="white"/><polygon points="58,18 40,54 51,54 40,84 62,42 51,42" fill="black"/></mask></defs><g mask="url(#m)"><rect x="22" y="22" width="62" height="28" rx="14" transform="rotate(-34 53 36)"/><rect x="16" y="50" width="62" height="28" rx="14" transform="rotate(-34 47 64)"/></g></svg>`;
-
-export const markDataUri = (fill = palette.cream) => `data:image/svg+xml,${encodeURIComponent(markSvg(fill))}`;
+// The brand mark (cream on transparent, src/assets/brand) as a data URI so Satori can rasterise it.
+let markCache: Promise<string> | undefined;
+const markDataUri = () =>
+  (markCache ??= readFile(join(process.cwd(), "src/assets/brand/mark-cream.png")).then(
+    (b) => `data:image/png;base64,${b.toString("base64")}`,
+  ));
+const markRatio = markCream.width / markCream.height;
 
 type OgProps = {
   eyebrow: string;
@@ -26,10 +28,11 @@ type OgProps = {
 const host = site.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
 export async function renderOg({ eyebrow, lead, accent = "" }: OgProps) {
-  const [display, serif, sans] = await Promise.all([
+  const [display, serif, sans, markSrc] = await Promise.all([
     font("SpaceGrotesk-Bold.woff"),
     font("InstrumentSerif-Italic.woff"),
     font("Inter-Regular.woff"),
+    markDataUri(),
   ]);
 
   const length = lead.length + accent.length;
@@ -55,7 +58,7 @@ export async function renderOg({ eyebrow, lead, accent = "" }: OgProps) {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={markDataUri()} width={44} height={44} alt="" />
+            <img src={markSrc} width={Math.round(44 * markRatio)} height={44} alt="" />
             <div style={{ fontFamily: "Space Grotesk", fontSize: 24, letterSpacing: "0.18em", textTransform: "uppercase" }}>
               Surge AI
             </div>
@@ -128,7 +131,8 @@ export async function renderOg({ eyebrow, lead, accent = "" }: OgProps) {
 }
 
 /** Square brand icon: cream mark on a black rounded tile. */
-export function renderIcon(size: number) {
+export async function renderIcon(size: number) {
+  const markSrc = await markDataUri();
   return new ImageResponse(
     (
       <div
@@ -143,7 +147,7 @@ export function renderIcon(size: number) {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={markDataUri()} width={size * 0.72} height={size * 0.72} alt="" />
+        <img src={markSrc} width={Math.round(size * 0.68 * markRatio)} height={Math.round(size * 0.68)} alt="" />
       </div>
     ),
     { width: size, height: size },
