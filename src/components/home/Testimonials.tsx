@@ -39,9 +39,7 @@ function Card({ t }: { t: Testimonial }) {
           </span>
           <span className="min-w-0">
             <span className="block text-sm font-semibold">{t.name}</span>
-            <span className={cn("block text-xs", dark ? "text-cream/60" : "text-muted")}>
-              {t.role}, {t.company}
-            </span>
+            <span className={cn("block text-xs", dark ? "text-cream/60" : "text-muted")}>{t.role}</span>
           </span>
           <span className="ml-auto shrink-0">
             <Stars dark={dark} />
