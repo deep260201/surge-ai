@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Bot, Code, Eye, Handshake, Palette, Rocket, ShieldCheck, Zap, type LucideIcon } from "lucide-react";
 import { LogoMark } from "@/components/brand/Logo";
+import { serviceImages } from "@/components/services/serviceImages";
 import { FinalCTA } from "@/components/home/FinalCTA";
 import { Process } from "@/components/home/Process";
 import { Stats } from "@/components/home/Stats";
@@ -36,10 +38,11 @@ const values: { icon: LucideIcon; title: string; detail: string }[] = [
   { icon: Rocket, title: "Measured by outcomes", detail: "Every project starts with a number we're trying to move, and ends by reporting on it." },
 ];
 
-const disciplines: { icon: LucideIcon; title: string; detail: string; items: string[] }[] = [
-  { icon: Code, title: "Web & product", detail: "Websites, e-commerce, web and mobile apps, custom software.", items: ["Design", "Build", "Replatform", "Scale"] },
-  { icon: Palette, title: "Brand & creative", detail: "Identity, rebrands, decks and the creative that follows.", items: ["Identity", "Guidelines", "Decks", "Campaigns"] },
-  { icon: Bot, title: "AI & automation", detail: "Workflows, agents, integrations and the roadmap to get there.", items: ["Automate", "Agents", "Integrate", "Advise"] },
+// Pictures reuse the service illustrations so the two sections stay consistent.
+const disciplines: { icon: LucideIcon; image: string; title: string; detail: string; items: string[] }[] = [
+  { icon: Code, image: "web-design-development", title: "Web & product", detail: "Websites, e-commerce, web and mobile apps, custom software.", items: ["Design", "Build", "Replatform", "Scale"] },
+  { icon: Palette, image: "branding", title: "Brand & creative", detail: "Identity, rebrands, decks and the creative that follows.", items: ["Identity", "Guidelines", "Decks", "Campaigns"] },
+  { icon: Bot, image: "ai-bots-automation", title: "AI & automation", detail: "Workflows, agents, integrations and the roadmap to get there.", items: ["Automate", "Agents", "Integrate", "Advise"] },
 ];
 
 export default function AboutPage() {
@@ -127,6 +130,15 @@ export default function AboutPage() {
                   <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-mist transition-colors group-hover:bg-black group-hover:text-cream">
                     <d.icon className="h-6 w-6" strokeWidth={1.75} />
                   </span>
+                  <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl bg-mist">
+                    <Image
+                      src={serviceImages[d.image].src}
+                      alt={serviceImages[d.image].alt}
+                      fill
+                      sizes="(min-width: 1024px) 400px, 90vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                  </div>
                   <h3 className="mt-6 font-display text-2xl font-bold tracking-tight">{d.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{d.detail}</p>
                   <div className="mt-6 flex flex-wrap gap-1.5">
