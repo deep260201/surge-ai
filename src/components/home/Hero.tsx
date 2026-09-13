@@ -29,7 +29,7 @@ export function Hero() {
         </Reveal>
         {/* The headline is the LCP element: keep it static so it paints with the first frame. */}
         <h1 className="mt-7 max-w-5xl font-display text-[2.75rem] font-bold leading-[1] tracking-[-0.035em] sm:text-7xl lg:text-[5.25rem]">
-          Websites and AI systems built to <span className="accent-word">surge your business forward</span>
+          We build the websites and AI systems that <span className="accent-word">surge your business forward</span>
         </h1>
         <Reveal delay={0.1}>
           <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
