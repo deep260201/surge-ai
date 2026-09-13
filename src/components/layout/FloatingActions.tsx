@@ -17,6 +17,7 @@ const emailHref = `mailto:${site.email}?subject=${encodeURIComponent("Project en
 
 export function FloatingActions() {
   const [showTop, setShowTop] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 600);
@@ -24,6 +25,16 @@ export function FloatingActions() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // mailto: only opens something if the visitor has a default mail app configured, which many
+  // people don't (webmail users, mainly). Copying the address alongside it means the click always
+  // does something useful, even when no mail app opens.
+  const onEmailClick = () => {
+    navigator.clipboard?.writeText(site.email).then(() => {
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   return (
     <div className="fixed bottom-5 right-5 z-40 flex flex-col items-center gap-3">
@@ -38,13 +49,25 @@ export function FloatingActions() {
       >
         <ArrowUp className="h-4 w-4" />
       </button>
-      <a
-        href={emailHref}
-        aria-label={`Email us at ${site.email}`}
-        className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-ink shadow-card-hover transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-cream"
-      >
-        <Mail className="h-5 w-5" strokeWidth={1.75} />
-      </a>
+      <span className="relative">
+        <span
+          role="status"
+          className={cn(
+            "pointer-events-none absolute right-full top-1/2 mr-2.5 -translate-y-1/2 whitespace-nowrap rounded-full bg-black px-3 py-1.5 text-xs font-medium text-cream shadow-card transition-all duration-200",
+            copied ? "translate-x-0 opacity-100" : "translate-x-1 opacity-0",
+          )}
+        >
+          {copied ? `Copied ${site.email}` : ""}
+        </span>
+        <a
+          href={emailHref}
+          onClick={onEmailClick}
+          aria-label={`Email us at ${site.email}`}
+          className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-line bg-white text-ink shadow-card-hover transition-all hover:-translate-y-0.5 hover:border-black hover:bg-black hover:text-cream"
+        >
+          <Mail className="h-5 w-5" strokeWidth={1.75} />
+        </a>
+      </span>
       <a
         href={whatsappHref()}
         target="_blank"
