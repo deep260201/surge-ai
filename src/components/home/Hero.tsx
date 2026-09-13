@@ -23,7 +23,7 @@ export function Hero() {
       <div className="container-x relative flex flex-col items-center text-center">
         <Reveal>
           <span className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-4 py-2 text-xs font-medium text-muted shadow-card">
-            <span className="h-1.5 w-1.5 rounded-full bg-black" />
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Web design, development & AI automation
           </span>
         </Reveal>
