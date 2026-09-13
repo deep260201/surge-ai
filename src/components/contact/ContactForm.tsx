@@ -15,7 +15,6 @@ const schema = z.object({
   company: z.optional(z.string().check(z.trim())),
   website: z.optional(z.string().check(z.trim())),
   service: z.string().check(z.minLength(1, "Pick the closest match.")),
-  budget: z.string().check(z.minLength(1, "Pick a range, even a rough one.")),
   message: z.string().check(z.trim(), z.minLength(20, "A few sentences helps us prepare properly.")),
   audit: z.boolean(),
   botcheck: z.string().check(z.maxLength(0)),
@@ -23,8 +22,6 @@ const schema = z.object({
 
 type Values = z.infer<typeof schema>;
 type Errors = Partial<Record<keyof Values, string>>;
-
-const budgets = ["Under $2k", "$2k – $5k", "$5k – $15k", "$15k – $50k", "$50k+", "Not sure yet"];
 
 const field =
   "w-full rounded-xl border border-line bg-paper px-4 py-3 text-sm text-ink placeholder:text-muted/70 transition-colors focus:border-black focus:outline-none";
@@ -37,7 +34,6 @@ export function ContactForm() {
     company: "",
     website: "",
     service: "",
-    budget: "",
     message: "",
     audit: true,
     botcheck: "",
@@ -71,7 +67,6 @@ export function ContactForm() {
       company: parsed.data.company ?? "",
       website: parsed.data.website ?? "",
       service: parsed.data.service,
-      budget: parsed.data.budget,
       message: parsed.data.message,
       free_audit: parsed.data.audit ? "Yes" : "No",
     });
@@ -120,7 +115,7 @@ export function ContactForm() {
           <label htmlFor="website" className={label}>Current website <span className="normal-case tracking-normal text-muted/70">(optional)</span></label>
           <input id="website" className={field} value={values.website} onChange={(e) => set("website", e.target.value)} inputMode="url" placeholder="https://" />
         </div>
-        <div>
+        <div className="sm:col-span-2">
           <label htmlFor="service" className={label}>What do you need?</label>
           <select id="service" className={cn(field, errors.service && "border-black")} value={values.service} onChange={(e) => set("service", e.target.value)}>
             <option value="">Select a service</option>
@@ -130,16 +125,6 @@ export function ContactForm() {
             <option value="Not sure / several">Not sure / several</option>
           </select>
           {errors.service && <p className="mt-1.5 text-xs text-ink">{errors.service}</p>}
-        </div>
-        <div>
-          <label htmlFor="budget" className={label}>Budget range</label>
-          <select id="budget" className={cn(field, errors.budget && "border-black")} value={values.budget} onChange={(e) => set("budget", e.target.value)}>
-            <option value="">Select a range</option>
-            {budgets.map((b) => (
-              <option key={b} value={b}>{b}</option>
-            ))}
-          </select>
-          {errors.budget && <p className="mt-1.5 text-xs text-ink">{errors.budget}</p>}
         </div>
         <div className="sm:col-span-2">
           <label htmlFor="message" className={label}>Tell us about the project</label>

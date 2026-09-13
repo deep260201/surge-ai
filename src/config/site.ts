@@ -11,9 +11,8 @@ export const site = {
   web3formsKey: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "",
   gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
   socials: {
-    linkedin: "https://linkedin.com", // TODO: replace
-    instagram: "https://instagram.com", // TODO: replace
-    x: "https://x.com", // TODO: replace
+    linkedin: "https://www.linkedin.com/company/surgeai-ca/",
+    instagram: "https://www.instagram.com/surgeai.ca",
   },
 } as const;
 
