@@ -92,7 +92,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[slug
           <Button href="/contact/" size="lg" arrow>
             Start Your Project
           </Button>
-          <Button href={whatsappHref(`Hi Surge AI, I'd like to talk about ${s.title.toLowerCase()}.`)} variant="secondary" size="lg">
+          <Button href={whatsappHref(`Hi Surge AI, I'd like to talk about ${s.title.toLowerCase()}.`)} variant="secondary" size="lg" className="bg-white">
             Chat on WhatsApp
           </Button>
         </div>

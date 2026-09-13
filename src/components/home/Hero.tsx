@@ -41,7 +41,7 @@ export function Hero() {
           <Button href="/contact/" size="lg" arrow>
             Start Your Project
           </Button>
-          <Button href={whatsappHref()} variant="secondary" size="lg">
+          <Button href={whatsappHref()} variant="secondary" size="lg" className="bg-white">
             Chat on WhatsApp
           </Button>
         </Reveal>

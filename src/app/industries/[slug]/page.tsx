@@ -94,7 +94,7 @@ export default async function IndustryPage({ params }: PageProps<"/industries/[s
           <Button href="/contact/" size="lg" arrow>
             Get a quote
           </Button>
-          <Button href={whatsappHref(`Hi Surge AI, I run a ${ind.title.toLowerCase()} business and I'd like to talk.`)} variant="secondary" size="lg">
+          <Button href={whatsappHref(`Hi Surge AI, I run a ${ind.title.toLowerCase()} business and I'd like to talk.`)} variant="secondary" size="lg" className="bg-white">
             Chat on WhatsApp
           </Button>
         </div>
