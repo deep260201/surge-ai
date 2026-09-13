@@ -1,7 +1,10 @@
+import Image from "next/image";
 import { Check, RefreshCw, Rocket } from "lucide-react";
+import newBuild from "@/assets/two-doors/new-build.webp";
+import rebuildAfter from "@/assets/two-doors/rebuild-after.webp";
+import rebuildBefore from "@/assets/two-doors/rebuild-before.webp";
 import { BeforeAfter } from "@/components/ui/BeforeAfter";
 import { Button } from "@/components/ui/Button";
-import { Mockup } from "@/components/ui/Mockup";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -43,13 +46,22 @@ export function TwoDoors() {
           {doors.map((d, i) => (
             <Reveal key={d.title} delay={i * 0.08}>
               <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-paper shadow-card">
-                <div className={d.dark ? "overflow-hidden bg-black px-8 pt-8" : "bg-mist p-8"}>
+                <div className={d.dark ? "bg-black p-8" : "bg-mist p-8"}>
                   {d.dark ? (
-                    <div className="flex aspect-[16/10] items-end justify-center">
-                      <Mockup variant="phone" dark label="New build" className="translate-y-8" />
+                    <div className="relative aspect-[16/10] w-full overflow-hidden rounded-2xl">
+                      <Image
+                        src={newBuild}
+                        alt="Exact Sports soccer camp website shown on a laptop"
+                        fill
+                        sizes="(min-width: 1024px) 560px, 90vw"
+                        className="object-cover"
+                      />
                     </div>
                   ) : (
-                    <BeforeAfter />
+                    <BeforeAfter
+                      before={{ src: rebuildBefore, alt: "Rawspicebar website before the redesign: a plain white page with small photos" }}
+                      after={{ src: rebuildAfter, alt: "Rawspicebar website after the redesign: a bold orange hero with product photography" }}
+                    />
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-8">

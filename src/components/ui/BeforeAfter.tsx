@@ -1,84 +1,25 @@
 "use client";
 
+import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 
-function OldSite() {
-  return (
-    <div className="flex h-full flex-col rounded-2xl border border-line-dark bg-[#3a3a36] shadow-card">
-      <div className="flex items-center gap-1.5 border-b border-line-dark px-3 py-2.5">
-        <span className="h-2 w-2 rounded-full bg-cream/20" />
-        <span className="h-2 w-2 rounded-full bg-cream/20" />
-        <span className="h-2 w-2 rounded-full bg-cream/20" />
-        <span className="ml-3 h-2 flex-1 rounded-full bg-cream/10" />
-      </div>
-      <div className="flex flex-1 flex-col gap-2 p-4 sm:p-5">
-        <div className="flex items-center justify-between gap-2">
-          <div className="h-3 w-16 rounded-sm bg-cream/40" />
-          <div className="flex gap-1">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i} className="h-2 w-6 rounded-sm bg-cream/25" />
-            ))}
-          </div>
-        </div>
-        <div className="mt-1 grid grid-cols-4 gap-1.5">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span key={i} className={cn("h-7 rounded-sm", i % 3 === 0 ? "bg-cream/30" : "bg-cream/15")} />
-          ))}
-        </div>
-        <div className="h-2 w-full rounded-sm bg-cream/20" />
-        <div className="h-2 w-11/12 rounded-sm bg-cream/20" />
-        <div className="h-2 w-full rounded-sm bg-cream/20" />
-        <div className="mt-auto grid grid-cols-3 gap-1.5">
-          <span className="h-5 rounded-sm bg-cream/40" />
-          <span className="h-5 rounded-sm bg-cream/20" />
-          <span className="h-5 rounded-sm bg-cream/20" />
-        </div>
-      </div>
-    </div>
-  );
-}
+type Shot = { src: StaticImageData; alt: string };
 
-function NewSite() {
-  return (
-    <div className="flex h-full flex-col rounded-2xl border border-line bg-paper shadow-card">
-      <div className="flex items-center gap-1.5 border-b border-line px-3 py-2.5">
-        <span className="h-2 w-2 rounded-full bg-line" />
-        <span className="h-2 w-2 rounded-full bg-line" />
-        <span className="h-2 w-2 rounded-full bg-line" />
-        <span className="ml-3 h-2 flex-1 rounded-full bg-mist" />
-      </div>
-      <div className="flex flex-1 flex-col p-4 sm:p-5">
-        <div className="flex items-center justify-between">
-          <div className="font-display text-base font-bold tracking-tight">Rebuild</div>
-          <div className="flex gap-1.5">
-            <span className="h-2 w-8 rounded-full bg-line" />
-            <span className="h-2 w-8 rounded-full bg-line" />
-            <span className="h-6 w-14 rounded-full bg-black" />
-          </div>
-        </div>
-        <div className="mt-5 h-4 w-2/3 rounded-full bg-line" />
-        <div className="mt-2 h-2.5 w-1/2 rounded-full bg-mist" />
-        <div className="mt-auto grid grid-cols-3 gap-2.5">
-          <div className="h-14 rounded-xl bg-line" />
-          <div className="h-14 rounded-xl bg-mist" />
-          <div className="h-14 rounded-xl bg-line" />
-        </div>
-      </div>
-    </div>
-  );
-}
+const frame = "absolute inset-0 overflow-hidden rounded-2xl border border-line bg-paper shadow-card";
+const sizes = "(min-width: 1024px) 560px, 90vw";
 
-export function BeforeAfter({ className }: { className?: string }) {
+/** Drag-to-compare slider. `before` and `after` should share the same framing so they line up. */
+export function BeforeAfter({ before, after, className }: { before: Shot; after: Shot; className?: string }) {
   const [pos, setPos] = useState(50);
 
   return (
     <div className={cn("relative aspect-[16/10] w-full select-none", className)}>
-      <div className="absolute inset-0">
-        <NewSite />
+      <div className={frame}>
+        <Image src={after.src} alt={after.alt} fill sizes={sizes} className="object-cover object-top" />
       </div>
-      <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-        <OldSite />
+      <div className={frame} style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
+        <Image src={before.src} alt={before.alt} fill sizes={sizes} className="object-cover object-top" />
       </div>
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-black" style={{ left: `${pos}%` }}>
