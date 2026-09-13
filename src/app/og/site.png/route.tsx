@@ -5,7 +5,7 @@ export const dynamic = "force-static";
 export function GET() {
   return renderOg({
     eyebrow: "Web · Apps · AI Automation",
-    lead: "We build websites and AI systems that",
-    accent: "move business forward.",
+    lead: "Websites and AI systems built to",
+    accent: "surge your business forward",
   });
 }
