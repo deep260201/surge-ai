@@ -4,8 +4,9 @@ export const site = {
   description:
     "Surge AI is a web design, development and AI automation agency. We build fast, scalable websites, apps and AI-powered systems for ambitious businesses.",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://surgeai.example.com").replace(/\/$/, ""), // TODO: replace
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hello@surgeai.example.com", // TODO: replace
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "work@surgeai.ca",
+  // Digits only with country code, as wa.me expects: +1 519-721-4932
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "15197214932",
   calendlyUrl: process.env.NEXT_PUBLIC_CALENDLY_URL ?? "",
   web3formsKey: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "",
   gaId: process.env.NEXT_PUBLIC_GA_ID ?? "",
