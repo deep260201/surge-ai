@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { serviceIcons as icons } from "@/components/services/serviceIcons";
+import { serviceImages } from "@/components/services/serviceImages";
 import { Button } from "@/components/ui/Button";
 import { Carousel } from "@/components/ui/Carousel";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -23,6 +25,7 @@ export function ServicesCarousel() {
       >
         {services.map((s, i) => {
           const Icon = icons[s.slug];
+          const img = serviceImages[s.slug];
           const dark = i % 3 === 1;
           return (
             <Link
@@ -52,7 +55,10 @@ export function ServicesCarousel() {
                   )}
                 />
               </div>
-              <h3 className="mt-8 font-display text-2xl font-bold tracking-tight">{s.title}</h3>
+              <div className={cn("relative mt-6 aspect-[5/4] overflow-hidden rounded-2xl", dark ? "bg-cream/10" : "bg-mist")}>
+                <Image src={img.src} alt={img.alt} fill sizes="352px" loading="eager" className="object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+              </div>
+              <h3 className="mt-6 font-display text-2xl font-bold tracking-tight">{s.title}</h3>
               <p className={cn("mt-2 text-sm leading-relaxed", dark ? "text-cream/65" : "text-muted")}>{s.tagline}</p>
               <ul className={cn("mt-6 space-y-2 border-t pt-5 text-sm", dark ? "border-line-dark" : "border-line")}>
                 {s.subServices.slice(0, 3).map((sub) => (
